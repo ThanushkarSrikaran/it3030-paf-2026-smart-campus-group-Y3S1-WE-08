@@ -4,6 +4,7 @@ import com.smartcampus.hub.dto.LoginRequest;
 import com.smartcampus.hub.dto.RegisterRequest;
 import com.smartcampus.hub.security.PrincipalUser;
 import com.smartcampus.hub.service.AuthService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -44,6 +46,7 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
             String token = authService.register(request);
+            log.info("New user registered: {}", request.getEmail());
             return ResponseEntity.ok(Map.of("token", token));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
