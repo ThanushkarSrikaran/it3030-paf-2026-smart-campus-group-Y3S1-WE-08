@@ -5,13 +5,16 @@ import com.smartcampus.hub.entity.ticketing.Ticket;
 import com.smartcampus.hub.enums.ticketing.TicketStatus;
 import com.smartcampus.hub.security.PrincipalUser;
 import com.smartcampus.hub.service.ticketing.TicketService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
@@ -23,12 +26,16 @@ public class TicketController {
     }
 
     @PostMapping
-    public ResponseEntity<Ticket> createTicket(
+    public ResponseEntity<?> createTicket(
             @RequestBody Ticket ticket,
             @AuthenticationPrincipal PrincipalUser principalUser
     ) {
-        ticket.setReporterEmail(principalUser.getUsername());
-        return ResponseEntity.ok(ticketService.createTicket(ticket));
+        try {
+            ticket.setReporterEmail(principalUser.getUsername());
+            return ResponseEntity.ok(ticketService.createTicket(ticket));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping
