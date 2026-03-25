@@ -9,6 +9,7 @@ import com.smartcampus.hub.security.JwtService;
 import com.smartcampus.hub.security.PrincipalUser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AuthService {
 
@@ -67,6 +69,7 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+        log.info("User registered: {}", email);
         return generateToken(user);
     }
 
@@ -137,6 +140,7 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+        log.info("Staff account created: {} role={} dept={}", email, assignRole, department);
         return "Account created successfully";
     }
 
@@ -159,6 +163,7 @@ public class AuthService {
             throw new IllegalArgumentException("This account is inactive. Please contact an administrator.");
         }
 
+        log.debug("Login successful: {}", email);
         return generateToken(user);
     }
 
