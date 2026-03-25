@@ -34,11 +34,7 @@ public class NotificationService {
     }
 
     public List<Notification> getUnreadForUser(String userId) {
-        // Correcting the repository method signature if needed, but for now we fetch all and filter or trust repo
-        // Our repo had a slight mismatch in return type in previous tool call, let's fix it here via usage
-        return notificationRepository.findAll().stream()
-                .filter(n -> userId.equals(n.getUserId()) && !n.isRead())
-                .toList();
+        return notificationRepository.findByUserIdAndReadOrderByCreatedAtDesc(userId, false);
     }
 
     public void markAsRead(String id) {
