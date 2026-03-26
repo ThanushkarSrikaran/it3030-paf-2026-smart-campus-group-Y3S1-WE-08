@@ -5,6 +5,7 @@ import com.smartcampus.hub.dto.AdminUserStatusUpdateRequest;
 import com.smartcampus.hub.dto.AdminUserView;
 import com.smartcampus.hub.security.PrincipalUser;
 import com.smartcampus.hub.service.AdminService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-// Admin endpoints: ADMIN can do everything; MANAGER is limited to their own department
 public class AdminController {
 
     private final AdminService adminService;
@@ -47,13 +49,13 @@ public class AdminController {
             @AuthenticationPrincipal PrincipalUser principalUser
     ) {
         if (request.getActive() == null) {
-            return ResponseEntity.badRequest().body("Field 'active' is required.");
+            return ResponseEntity.badRequest().body(Map.of("error", "Field 'active' is required."));
         }
 
         try {
             return ResponseEntity.ok(adminService.updateUserActiveStatus(id, request.getActive(), principalUser));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 }
