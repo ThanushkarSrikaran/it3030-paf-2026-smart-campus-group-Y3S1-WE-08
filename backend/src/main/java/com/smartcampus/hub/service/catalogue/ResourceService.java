@@ -4,6 +4,7 @@ import com.smartcampus.hub.entity.catalogue.Resource;
 import com.smartcampus.hub.enums.catalogue.ResourceStatus;
 import com.smartcampus.hub.enums.catalogue.ResourceType;
 import com.smartcampus.hub.repository.catalogue.ResourceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+@Slf4j
 @Service
 public class ResourceService {
 
@@ -80,7 +82,15 @@ public class ResourceService {
     }
 
     public Resource createResource(Resource resource) {
-        return resourceRepository.save(resource);
+        if (resource.getName() == null || resource.getName().isBlank()) {
+            throw new IllegalArgumentException("Resource name is required.");
+        }
+        if (resource.getStatus() == null) {
+            resource.setStatus(ResourceStatus.ACTIVE);
+        }
+        Resource saved = resourceRepository.save(resource);
+        log.info("Resource created: id={} name='{}'", saved.getId(), saved.getName());
+        return saved;
     }
 
     public Resource updateResource(String id, Resource resourceDetails) {
@@ -104,10 +114,12 @@ public class ResourceService {
         resource.setMaxAttendees(resourceDetails.getMaxAttendees());
         resource.setTimeSlots(resourceDetails.getTimeSlots());
         
+        log.info("Resource updated: id={}", id);
         return resourceRepository.save(resource);
     }
 
     public void deleteResource(String id) {
         resourceRepository.deleteById(id);
+        log.info("Resource deleted: id={}", id);
     }
 }
