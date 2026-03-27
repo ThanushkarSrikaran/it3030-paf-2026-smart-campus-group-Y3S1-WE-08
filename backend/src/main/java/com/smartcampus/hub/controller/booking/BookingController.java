@@ -52,12 +52,16 @@ public class BookingController {
 
     @PatchMapping("/{id}/status")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<Booking> updateBookingStatus(
+    public ResponseEntity<?> updateBookingStatus(
             @PathVariable String id,
             @RequestParam BookingStatus status,
             @RequestParam(required = false) String rejectionReason
     ) {
-        return ResponseEntity.ok(bookingService.updateBookingStatus(id, status, rejectionReason));
+        try {
+            return ResponseEntity.ok(bookingService.updateBookingStatus(id, status, rejectionReason));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     @PutMapping("/{id}")
