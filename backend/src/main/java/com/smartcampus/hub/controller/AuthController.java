@@ -69,10 +69,15 @@ public class AuthController {
 
     @PostMapping("/google")
     public ResponseEntity<?> googleLogin(@RequestBody Map<String, String> body) {
+        String googleToken = body.get("token");
+        if (googleToken == null || googleToken.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Google token is required."));
+        }
         try {
-            String googleToken = body.get("token");
             String token = authService.loginWithGoogle(googleToken);
             return ResponseEntity.ok(Map.of("token", token));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(401).body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("error", "Google login failed."));
         }
