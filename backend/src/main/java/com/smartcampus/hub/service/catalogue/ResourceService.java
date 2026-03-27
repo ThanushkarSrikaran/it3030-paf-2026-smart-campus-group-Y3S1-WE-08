@@ -113,7 +113,12 @@ public class ResourceService {
         resource.setMinAttendees(resourceDetails.getMinAttendees());
         resource.setMaxAttendees(resourceDetails.getMaxAttendees());
         resource.setTimeSlots(resourceDetails.getTimeSlots());
-        
+
+        String building = resource.getBuilding() != null ? resource.getBuilding() : "";
+        String floor    = resource.getFloor()    != null ? " · " + resource.getFloor() : "";
+        String room     = resource.getRoomCode() != null ? " · " + resource.getRoomCode() : "";
+        resource.setLocation((building + floor + room).trim());
+
         log.info("Resource updated: id={}", id);
         return resourceRepository.save(resource);
     }
