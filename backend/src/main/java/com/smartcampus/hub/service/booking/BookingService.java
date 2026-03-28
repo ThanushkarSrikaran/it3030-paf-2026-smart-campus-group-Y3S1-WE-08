@@ -165,7 +165,10 @@ public class BookingService {
             }
         }
 
-        // Validate end time is after start time
+        if (booking.getStartTime() == null || booking.getEndTime() == null) {
+            throw new RuntimeException("Start time and end time are required.");
+        }
+
         if (!booking.getEndTime().isAfter(booking.getStartTime())) {
             throw new RuntimeException("End time must be after start time.");
         }
