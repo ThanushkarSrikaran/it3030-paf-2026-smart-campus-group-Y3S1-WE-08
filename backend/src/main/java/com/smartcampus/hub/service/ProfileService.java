@@ -3,8 +3,10 @@ package com.smartcampus.hub.service;
 import com.smartcampus.hub.dto.ProfileUpdateRequest;
 import com.smartcampus.hub.entity.User;
 import com.smartcampus.hub.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class ProfileService {
 
@@ -28,6 +30,8 @@ public class ProfileService {
             user.setPicture(request.getPicture().trim());
         }
 
-        return userRepository.save(user);
+        User saved = userRepository.save(user);
+        log.info("Profile updated for user: {}", email);
+        return saved;
     }
 }
