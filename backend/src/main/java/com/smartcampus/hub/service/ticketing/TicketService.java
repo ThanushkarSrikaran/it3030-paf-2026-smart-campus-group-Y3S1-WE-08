@@ -31,6 +31,9 @@ public class TicketService {
     }
 
     public Ticket createTicket(Ticket ticket) {
+        if (ticket.getTitle() == null || ticket.getTitle().isBlank()) {
+            throw new IllegalArgumentException("Ticket title is required.");
+        }
         if (ticket.getDepartment() == null || ticket.getDepartment().isBlank()) {
             throw new IllegalArgumentException("Department is required when creating a ticket.");
         }
