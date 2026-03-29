@@ -33,6 +33,7 @@ public class AuthService {
             "OPERATIONS"
     );
 
+    private static final int MIN_PASSWORD_LENGTH = 6;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final UserRepository userRepository;
@@ -53,8 +54,8 @@ public class AuthService {
         if (email.isBlank() || password.isBlank()) {
             throw new IllegalArgumentException("Email and password are required.");
         }
-        if (password.length() < 6) {
-            throw new IllegalArgumentException("Password must be at least 6 characters.");
+        if (password.length() < MIN_PASSWORD_LENGTH) {
+            throw new IllegalArgumentException("Password must be at least " + MIN_PASSWORD_LENGTH + " characters.");
         }
         if (userRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email is already registered.");
@@ -83,8 +84,8 @@ public class AuthService {
         if (email.isBlank() || password.isBlank()) {
             throw new IllegalArgumentException("Email and password are required.");
         }
-        if (password.length() < 6) {
-            throw new IllegalArgumentException("Password must be at least 6 characters.");
+        if (password.length() < MIN_PASSWORD_LENGTH) {
+            throw new IllegalArgumentException("Password must be at least " + MIN_PASSWORD_LENGTH + " characters.");
         }
         if (userRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email is already registered.");
