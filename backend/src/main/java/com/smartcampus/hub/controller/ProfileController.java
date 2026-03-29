@@ -28,6 +28,7 @@ public class ProfileController {
         if (principalUser == null) {
             return ResponseEntity.status(401).body("Not authenticated");
         }
+        log.debug("Profile fetched for user: {}", principalUser.getUsername());
         return ResponseEntity.ok(principalUser.getUser());
     }
 
