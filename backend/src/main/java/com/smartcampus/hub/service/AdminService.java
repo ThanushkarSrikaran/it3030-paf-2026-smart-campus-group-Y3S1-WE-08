@@ -28,16 +28,7 @@ public class AdminService {
     public List<AdminUserView> getAllUsersForAdmin() {
         return userRepository.findAll().stream()
                 .sorted(Comparator.comparing(User::getCreatedAt, Comparator.nullsLast(Comparator.reverseOrder())))
-                .map(user -> new AdminUserView(
-                        user.getId(),
-                        user.getName(),
-                        user.getEmail(),
-                        user.getDepartment(),
-                        user.getActive() == null || user.getActive(),
-                        user.getRoles() == null ? List.of() : user.getRoles().stream().map(Enum::name).sorted().collect(Collectors.toList()),
-                        user.getCreatedAt(),
-                        user.getUpdatedAt()
-                ))
+                .map(this::toAdminUserView)
                 .collect(Collectors.toList());
     }
 
@@ -51,16 +42,19 @@ public class AdminService {
 
         user.setActive(active);
         User saved = userRepository.save(user);
+        return toAdminUserView(saved);
+    }
 
+    private AdminUserView toAdminUserView(User user) {
         return new AdminUserView(
-                saved.getId(),
-                saved.getName(),
-                saved.getEmail(),
-                saved.getDepartment(),
-                saved.getActive() == null || saved.getActive(),
-                saved.getRoles() == null ? List.of() : saved.getRoles().stream().map(Enum::name).sorted().collect(Collectors.toList()),
-                saved.getCreatedAt(),
-                saved.getUpdatedAt()
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getDepartment(),
+                user.getActive() == null || user.getActive(),
+                user.getRoles() == null ? List.of() : user.getRoles().stream().map(Enum::name).sorted().collect(Collectors.toList()),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
         );
     }
 
