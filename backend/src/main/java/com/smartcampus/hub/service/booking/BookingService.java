@@ -156,21 +156,20 @@ public class BookingService {
             throw new RuntimeException("Resource is not available for booking.");
         }
 
-        // Validate duration constraint (maxBookingHours)
-        if (resource.getMaxBookingHours() > 0 && booking.getStartTime() != null && booking.getEndTime() != null) {
-            long hours = Duration.between(booking.getStartTime(), booking.getEndTime()).toHours();
-            if (hours > resource.getMaxBookingHours()) {
-                throw new RuntimeException(
-                        "Maximum booking duration for this resource is " + resource.getMaxBookingHours() + " hour(s).");
-            }
-        }
-
         if (booking.getStartTime() == null || booking.getEndTime() == null) {
             throw new RuntimeException("Start time and end time are required.");
         }
 
         if (!booking.getEndTime().isAfter(booking.getStartTime())) {
             throw new RuntimeException("End time must be after start time.");
+        }
+
+        if (resource.getMaxBookingHours() > 0) {
+            long hours = Duration.between(booking.getStartTime(), booking.getEndTime()).toHours();
+            if (hours > resource.getMaxBookingHours()) {
+                throw new RuntimeException(
+                        "Maximum booking duration for this resource is " + resource.getMaxBookingHours() + " hour(s).");
+            }
         }
 
         // Validate attendee constraints
