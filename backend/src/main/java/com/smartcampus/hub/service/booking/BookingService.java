@@ -121,7 +121,7 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
-        log.info("Booking cancelled: id={} user={}", id, userEmail);
+        log.info("Booking cancelled: id={} resource='{}' user={}", id, booking.getResourceName(), userEmail);
     }
 
     public Booking updateBooking(String id, Booking updated, String userEmail) {
