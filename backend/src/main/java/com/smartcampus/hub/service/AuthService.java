@@ -162,6 +162,7 @@ public class AuthService {
             throw new IllegalArgumentException("This account is inactive. Please contact an administrator.");
         }
 
+        log.info("User logged in: {}", email);
         return generateToken(user);
     }
 
