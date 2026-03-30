@@ -54,10 +54,11 @@ public class TicketService {
             return ticketRepository.findAll();
         }
         if (hasRole(requester, Role.MANAGER)) {
-            if (requester.getDepartment() == null || requester.getDepartment().isBlank()) {
+            String dept = requester.getDepartment() == null ? "" : requester.getDepartment().trim();
+            if (dept.isBlank()) {
                 return List.of();
             }
-            return ticketRepository.findByDepartmentIgnoreCase(requester.getDepartment());
+            return ticketRepository.findByDepartmentIgnoreCase(dept);
         }
         return ticketRepository.findByAssigneeEmail(email);
     }
