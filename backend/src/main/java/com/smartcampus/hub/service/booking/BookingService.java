@@ -93,7 +93,11 @@ public class BookingService {
             booking.setRejectionReason(rejectionReason);
         }
         Booking updated = bookingRepository.save(booking);
-        log.info("Booking status updated: id={} status={} admin action", id, status);
+        if (status == BookingStatus.REJECTED && rejectionReason != null && !rejectionReason.isBlank()) {
+            log.info("Booking rejected: id={} reason='{}'", id, rejectionReason);
+        } else {
+            log.info("Booking status updated: id={} status={}", id, status);
+        }
 
         String message = "Your booking for \"" + updated.getResourceName() + "\" has been " + status.name().toLowerCase();
         if (status == BookingStatus.REJECTED && rejectionReason != null && !rejectionReason.isBlank()) {
