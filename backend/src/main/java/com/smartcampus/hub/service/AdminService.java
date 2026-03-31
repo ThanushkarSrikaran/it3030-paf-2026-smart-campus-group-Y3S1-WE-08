@@ -8,12 +8,14 @@ import com.smartcampus.hub.enums.ticketing.TicketStatus;
 import com.smartcampus.hub.repository.UserRepository;
 import com.smartcampus.hub.repository.ticketing.TicketRepository;
 import com.smartcampus.hub.security.PrincipalUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AdminService {
 
@@ -42,6 +44,7 @@ public class AdminService {
 
         user.setActive(active);
         User saved = userRepository.save(user);
+        log.info("User active status updated: userId={} active={}", userId, active);
         return toAdminUserView(saved);
     }
 
