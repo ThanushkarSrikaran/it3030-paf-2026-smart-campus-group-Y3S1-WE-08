@@ -14,6 +14,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -190,10 +191,13 @@ public class TicketService {
             }
         }
 
+        if (ticket.getComments() == null) {
+            ticket.setComments(new ArrayList<>());
+        }
         comment.setCreatedAt(LocalDateTime.now());
         ticket.getComments().add(comment);
         Ticket updated = ticketRepository.save(ticket);
-        
+
         // Notify reporter if comment is from someone else
         if (!comment.getUserEmail().equals(updated.getReporterEmail())) {
             notificationService.sendToUser(updated.getReporterEmail(), Notification.builder()
