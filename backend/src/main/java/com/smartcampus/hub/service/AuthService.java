@@ -188,6 +188,7 @@ public class AuthService {
             throw new IllegalArgumentException("This account is inactive. Please contact an administrator.");
         }
 
+        log.info("Google login: email={}", email);
         boolean changed = false;
         if ((user.getName() == null || user.getName().isBlank()) && name != null && !name.isBlank()) {
             user.setName(name);
