@@ -161,6 +161,7 @@ public class AuthService {
         }
 
         if (Boolean.FALSE.equals(user.getActive())) {
+            log.warn("Login blocked for inactive account: {}", email);
             throw new IllegalArgumentException("This account is inactive. Please contact an administrator.");
         }
 
