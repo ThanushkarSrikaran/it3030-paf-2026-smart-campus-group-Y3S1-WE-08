@@ -56,7 +56,7 @@ public class BookingService {
         notificationService.sendToUser(saved.getUserEmail(), Notification.builder()
                 .title("Booking Submitted")
                 .message("Your booking for \"" + resource.getName() + "\" is pending approval.")
-                .type(Notification.NotificationType.BOOKING_APPROVED)
+                .type(Notification.NotificationType.SYSTEM_ALERT)
                 .relatedId(saved.getId())
                 .build());
 
