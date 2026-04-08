@@ -4,6 +4,7 @@ import com.smartcampus.hub.entity.catalogue.Resource;
 import com.smartcampus.hub.enums.catalogue.ResourceStatus;
 import com.smartcampus.hub.enums.catalogue.ResourceType;
 import com.smartcampus.hub.service.catalogue.ResourceService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/catalogue")
 public class ResourceController {
@@ -47,7 +49,9 @@ public class ResourceController {
 
     @PostMapping
     public ResponseEntity<Resource> createResource(@RequestBody Resource resource) {
-        return ResponseEntity.ok(resourceService.createResource(resource));
+        Resource created = resourceService.createResource(resource);
+        log.info("Resource created: id={} name='{}'", created.getId(), created.getName());
+        return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
@@ -62,6 +66,7 @@ public class ResourceController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteResource(@PathVariable String id) {
         resourceService.deleteResource(id);
+        log.info("Resource deleted: id={}", id);
         return ResponseEntity.noContent().build();
     }
 }
