@@ -7,6 +7,7 @@ import com.smartcampus.hub.enums.booking.BookingStatus;
 import com.smartcampus.hub.repository.booking.BookingRepository;
 import com.smartcampus.hub.repository.catalogue.ResourceRepository;
 import com.smartcampus.hub.service.notifications.NotificationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class BookingService {
 
@@ -51,6 +53,7 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.PENDING);
         Booking saved = bookingRepository.save(booking);
+        log.info("Booking created: id={} resource='{}' user={}", saved.getId(), resource.getName(), saved.getUserEmail());
 
         // Notify user
         notificationService.sendToUser(saved.getUserEmail(), Notification.builder()
