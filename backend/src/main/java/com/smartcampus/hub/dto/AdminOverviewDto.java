@@ -4,16 +4,18 @@ public class AdminOverviewDto {
     private long totalUsers;
     private long staffUsers;
     private long totalTickets;
+    private long pendingTickets;
     private long openTickets;
     private long inProgressTickets;
 
     public AdminOverviewDto() {
     }
 
-    public AdminOverviewDto(long totalUsers, long staffUsers, long totalTickets, long openTickets, long inProgressTickets) {
+    public AdminOverviewDto(long totalUsers, long staffUsers, long totalTickets, long pendingTickets, long openTickets, long inProgressTickets) {
         this.totalUsers = totalUsers;
         this.staffUsers = staffUsers;
         this.totalTickets = totalTickets;
+        this.pendingTickets = pendingTickets;
         this.openTickets = openTickets;
         this.inProgressTickets = inProgressTickets;
     }
@@ -48,6 +50,14 @@ public class AdminOverviewDto {
 
     public void setOpenTickets(long openTickets) {
         this.openTickets = openTickets;
+    }
+
+    public long getPendingTickets() {
+        return pendingTickets;
+    }
+
+    public void setPendingTickets(long pendingTickets) {
+        this.pendingTickets = pendingTickets;
     }
 
     public long getInProgressTickets() {

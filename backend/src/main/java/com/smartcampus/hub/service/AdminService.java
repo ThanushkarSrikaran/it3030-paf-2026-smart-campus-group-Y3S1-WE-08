@@ -75,9 +75,10 @@ public class AdminService {
                 .count();
 
         long totalTickets = ticketRepository.count();
+        long pendingTickets = ticketRepository.findByStatus(TicketStatus.PENDING).size();
         long openTickets = ticketRepository.findByStatus(TicketStatus.OPEN).size();
         long inProgressTickets = ticketRepository.findByStatus(TicketStatus.IN_PROGRESS).size();
 
-        return new AdminOverviewDto(users.size(), staffUsers, totalTickets, openTickets, inProgressTickets);
+        return new AdminOverviewDto(users.size(), staffUsers, totalTickets, pendingTickets, openTickets, inProgressTickets);
     }
 }
