@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/catalogue")
 public class ResourceController {
 
+    private static final int DEFAULT_PAGE_SIZE = 10;
+
     private final ResourceService resourceService;
 
     public ResourceController(ResourceService resourceService) {
@@ -31,7 +33,7 @@ public class ResourceController {
             @RequestParam(required = false) String location,
             @RequestParam(required = false) ResourceStatus status,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "" + DEFAULT_PAGE_SIZE) int size,
             @RequestParam(defaultValue = "name") String sortBy,
             @RequestParam(defaultValue = "asc") String direction
     ) {
