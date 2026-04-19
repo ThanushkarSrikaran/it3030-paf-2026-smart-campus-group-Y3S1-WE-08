@@ -5,6 +5,7 @@ import com.smartcampus.hub.entity.User;
 import com.smartcampus.hub.entity.ticketing.Comment;
 import com.smartcampus.hub.entity.ticketing.Ticket;
 import com.smartcampus.hub.enums.Role;
+import com.smartcampus.hub.enums.ticketing.TicketPriority;
 import com.smartcampus.hub.enums.ticketing.TicketStatus;
 import com.smartcampus.hub.repository.UserRepository;
 import com.smartcampus.hub.repository.ticketing.TicketRepository;
@@ -34,6 +35,9 @@ public class TicketService {
         }
         ticket.setDepartment(ticket.getDepartment().trim().toUpperCase());
         ticket.setStatus(TicketStatus.PENDING);
+        if (ticket.getPriority() == null) {
+            ticket.setPriority(TicketPriority.MEDIUM);
+        }
         return ticketRepository.save(ticket);
     }
 
