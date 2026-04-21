@@ -9,6 +9,7 @@ import com.smartcampus.hub.security.JwtService;
 import com.smartcampus.hub.security.PrincipalUser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AuthService {
 
+    private static final int MIN_PASSWORD_LENGTH = 6;
     private static final Set<String> ALLOWED_DEPARTMENTS = Set.of(
             "IT",
             "MAINTENANCE",
@@ -51,8 +54,8 @@ public class AuthService {
         if (email.isBlank() || password.isBlank()) {
             throw new IllegalArgumentException("Email and password are required.");
         }
-        if (password.length() < 6) {
-            throw new IllegalArgumentException("Password must be at least 6 characters.");
+        if (password.length() < MIN_PASSWORD_LENGTH) {
+            throw new IllegalArgumentException("Password must be at least " + MIN_PASSWORD_LENGTH + " characters.");
         }
         if (userRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email is already registered.");
@@ -80,8 +83,8 @@ public class AuthService {
         if (email.isBlank() || password.isBlank()) {
             throw new IllegalArgumentException("Email and password are required.");
         }
-        if (password.length() < 6) {
-            throw new IllegalArgumentException("Password must be at least 6 characters.");
+        if (password.length() < MIN_PASSWORD_LENGTH) {
+            throw new IllegalArgumentException("Password must be at least " + MIN_PASSWORD_LENGTH + " characters.");
         }
         if (userRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email is already registered.");
