@@ -10,12 +10,14 @@ import com.smartcampus.hub.enums.ticketing.TicketStatus;
 import com.smartcampus.hub.repository.UserRepository;
 import com.smartcampus.hub.repository.ticketing.TicketRepository;
 import com.smartcampus.hub.service.notifications.NotificationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class TicketService {
 
@@ -38,7 +40,9 @@ public class TicketService {
         if (ticket.getPriority() == null) {
             ticket.setPriority(TicketPriority.MEDIUM);
         }
-        return ticketRepository.save(ticket);
+        Ticket saved = ticketRepository.save(ticket);
+        log.info("Ticket created: id={} dept={} priority={} reporter={}", saved.getId(), saved.getDepartment(), saved.getPriority(), saved.getReporterEmail());
+        return saved;
     }
 
     public List<Ticket> getMyTickets(String email) {
@@ -123,7 +127,8 @@ public class TicketService {
 
         ticket.setStatus(status);
         Ticket updated = ticketRepository.save(ticket);
-        
+        log.info("Ticket status updated: id={} status={} by={}", id, status, requesterEmail);
+
         notificationService.sendToUser(updated.getReporterEmail(), Notification.builder()
                 .title("Ticket Status Updated")
                 .message("Your ticket #" + updated.getId() + " is now " + status.name().toLowerCase())
