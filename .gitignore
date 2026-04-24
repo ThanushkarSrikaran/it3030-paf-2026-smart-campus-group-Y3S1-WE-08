@@ -1,0 +1,16 @@
+.metadata/
+
+# Ignore all Maven/Gradle target build directories anywhere in the repo
+**/target/
+
+# Never commit secrets
+backend/src/main/resources/application.properties
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
