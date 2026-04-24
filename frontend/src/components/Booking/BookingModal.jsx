@@ -1,3 +1,4 @@
+// BookingModal: handles resource reservation with calendar time-slot selection
 import React, { useState, useEffect, useCallback } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';

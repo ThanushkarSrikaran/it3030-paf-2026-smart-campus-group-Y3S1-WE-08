@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+// Admin endpoints: ADMIN can do everything; MANAGER is limited to their own department
 public class AdminController {
 
     private final AdminService adminService;
