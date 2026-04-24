@@ -1,0 +1,20 @@
+# General Application Settings
+spring.application.name=smart-campus-hub
+server.port=8080
+
+# MongoDB Configuration
+spring.data.mongodb.uri=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/smart_campus_hub?appName=Cluster0
+
+# OAuth2 Google Configuration
+spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
+spring.security.oauth2.client.registration.google.scope=email,profile
+
+# JWT Security Configuration
+application.security.jwt.secret-key=YOUR_JWT_SECRET_KEY_HERE
+application.security.jwt.expiration=86400000
+
+# Logging Levels
+logging.level.org.springframework.security=DEBUG
+logging.level.org.springframework.data.mongodb=DEBUG
+logging.level.com.smartcampus.hub=DEBUG
