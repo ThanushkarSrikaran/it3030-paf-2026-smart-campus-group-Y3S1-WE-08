@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* Space theme: #000814 deep navy base, sky-400 primary accent, purple secondary */
 
 html,
 body,
@@ -16,4 +17,9 @@ body {
   -webkit-font-smoothing: antialiased;
   background: #000814;
   color: #e2e8f0;
+}
+
+::selection {
+  background: rgba(56, 189, 248, 0.3);
+  color: #fff;
 }
