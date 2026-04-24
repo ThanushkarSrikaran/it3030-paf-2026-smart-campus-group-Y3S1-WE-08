@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { getAssignedTickets, getAllTickets } from '../../services/ticketingApi';
 import { toast } from 'react-hot-toast';
 import { ClipboardList, Clock, AlertTriangle, CheckCircle2, MessageSquare, Eye } from 'lucide-react';
