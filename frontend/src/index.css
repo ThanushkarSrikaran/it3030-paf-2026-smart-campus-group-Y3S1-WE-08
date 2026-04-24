@@ -18,3 +18,8 @@ body {
   background: #000814;
   color: #e2e8f0;
 }
+
+::selection {
+  background: rgba(56, 189, 248, 0.3);
+  color: #fff;
+}
