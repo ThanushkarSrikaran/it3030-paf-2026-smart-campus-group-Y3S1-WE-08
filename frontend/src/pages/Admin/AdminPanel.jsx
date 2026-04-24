@@ -1,3 +1,4 @@
+// AdminPanel: central control dashboard for ADMIN role — user mgmt, stats, staff onboarding
 import React, { useEffect, useMemo, useState } from 'react';
 import { UserPlus, Shield, Briefcase, Loader, Users, Search, Ticket, Wrench, Mail, Lock, User } from 'lucide-react';
 import { toast } from 'react-hot-toast';
