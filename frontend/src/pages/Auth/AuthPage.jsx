@@ -9,6 +9,7 @@ import { Mail, Lock, User, BookOpen, Zap, Globe, ArrowRight } from 'lucide-react
 
 const GOOGLE_LOGIN_ENABLED = Boolean(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 const MIN_PASSWORD_LENGTH = 6;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const MiniStars = () => {
     const canvasRef = useRef(null);
