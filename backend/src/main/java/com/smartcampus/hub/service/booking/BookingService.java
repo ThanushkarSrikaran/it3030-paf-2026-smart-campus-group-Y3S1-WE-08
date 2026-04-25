@@ -35,9 +35,6 @@ public class BookingService {
 
         validateBooking(booking, resource);
 
-        // Set resource details on booking for easier UI display
-
-        // Set resource details on booking for easier UI display
         booking.setResourceName(resource.getName());
         booking.setResourceType(resource.getType() != null ? resource.getType().name() : "RESOURCE");
         booking.setResourceCapacity(resource.getCapacity());
@@ -56,7 +53,7 @@ public class BookingService {
         notificationService.sendToUser(saved.getUserEmail(), Notification.builder()
                 .title("Booking Submitted")
                 .message("Your booking for \"" + resource.getName() + "\" is pending approval.")
-                .type(Notification.NotificationType.BOOKING_APPROVED)
+                .type(Notification.NotificationType.SYSTEM_ALERT)
                 .relatedId(saved.getId())
                 .build());
 
