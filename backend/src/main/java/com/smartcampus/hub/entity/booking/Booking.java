@@ -30,7 +30,8 @@ public class Booking {
     private int minAttendeesConstraint;
     private int maxAttendeesConstraint;
     private String userEmail;
-    
+    private String userName;
+
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     

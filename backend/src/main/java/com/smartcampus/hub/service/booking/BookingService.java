@@ -4,6 +4,7 @@ import com.smartcampus.hub.entity.booking.Booking;
 import com.smartcampus.hub.entity.catalogue.Resource;
 import com.smartcampus.hub.entity.notifications.Notification;
 import com.smartcampus.hub.enums.booking.BookingStatus;
+import com.smartcampus.hub.repository.UserRepository;
 import com.smartcampus.hub.repository.booking.BookingRepository;
 import com.smartcampus.hub.repository.catalogue.ResourceRepository;
 import com.smartcampus.hub.service.notifications.NotificationService;
@@ -20,13 +21,16 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final ResourceRepository resourceRepository;
     private final NotificationService notificationService;
+    private final UserRepository userRepository;
 
     public BookingService(BookingRepository bookingRepository,
                           ResourceRepository resourceRepository,
-                          NotificationService notificationService) {
+                          NotificationService notificationService,
+                          UserRepository userRepository) {
         this.bookingRepository = bookingRepository;
         this.resourceRepository = resourceRepository;
         this.notificationService = notificationService;
+        this.userRepository = userRepository;
     }
 
     public Booking createBooking(Booking booking) {
@@ -34,6 +38,9 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("Resource not found"));
 
         validateBooking(booking, resource);
+
+        userRepository.findByEmail(booking.getUserEmail())
+                .ifPresent(user -> booking.setUserName(user.getName()));
 
         booking.setResourceName(resource.getName());
         booking.setResourceType(resource.getType() != null ? resource.getType().name() : "RESOURCE");
