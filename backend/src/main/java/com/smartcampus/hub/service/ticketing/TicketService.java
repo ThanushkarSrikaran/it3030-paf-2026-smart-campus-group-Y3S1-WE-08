@@ -9,12 +9,14 @@ import com.smartcampus.hub.enums.ticketing.TicketStatus;
 import com.smartcampus.hub.repository.UserRepository;
 import com.smartcampus.hub.repository.ticketing.TicketRepository;
 import com.smartcampus.hub.service.notifications.NotificationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class TicketService {
 
@@ -34,7 +36,9 @@ public class TicketService {
         }
         ticket.setDepartment(ticket.getDepartment().trim().toUpperCase());
         ticket.setStatus(TicketStatus.PENDING);
-        return ticketRepository.save(ticket);
+        Ticket saved = ticketRepository.save(ticket);
+        log.info("Ticket created: id={} dept={} reporter={}", saved.getId(), saved.getDepartment(), saved.getReporterEmail());
+        return saved;
     }
 
     public List<Ticket> getMyTickets(String email) {
@@ -119,6 +123,7 @@ public class TicketService {
 
         ticket.setStatus(status);
         Ticket updated = ticketRepository.save(ticket);
+        log.info("Ticket status updated: id={} status={} by={}", id, status, requesterEmail);
         
         notificationService.sendToUser(updated.getReporterEmail(), Notification.builder()
                 .title("Ticket Status Updated")
@@ -136,6 +141,7 @@ public class TicketService {
         ticket.setAssigneeEmail(technicianEmail);
         ticket.setStatus(TicketStatus.IN_PROGRESS);
         Ticket updated = ticketRepository.save(ticket);
+        log.info("Ticket assigned: id={} assignee={}", id, technicianEmail);
         
         // Notify technician
         notificationService.sendToUser(technicianEmail, Notification.builder()

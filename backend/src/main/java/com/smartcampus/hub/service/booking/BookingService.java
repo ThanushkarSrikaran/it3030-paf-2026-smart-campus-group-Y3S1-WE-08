@@ -8,6 +8,7 @@ import com.smartcampus.hub.repository.UserRepository;
 import com.smartcampus.hub.repository.booking.BookingRepository;
 import com.smartcampus.hub.repository.catalogue.ResourceRepository;
 import com.smartcampus.hub.service.notifications.NotificationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class BookingService {
 
@@ -55,8 +57,8 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.PENDING);
         Booking saved = bookingRepository.save(booking);
+        log.info("Booking created: id={} resource='{}' user={}", saved.getId(), resource.getName(), saved.getUserEmail());
 
-        // Notify user
         notificationService.sendToUser(saved.getUserEmail(), Notification.builder()
                 .title("Booking Submitted")
                 .message("Your booking for \"" + resource.getName() + "\" is pending approval.")
@@ -91,6 +93,7 @@ public class BookingService {
             booking.setRejectionReason(rejectionReason);
         }
         Booking updated = bookingRepository.save(booking);
+        log.info("Booking status updated: id={} status={} admin action", id, status);
 
         String message = "Your booking for \"" + updated.getResourceName() + "\" has been " + status.name().toLowerCase();
         if (status == BookingStatus.REJECTED && rejectionReason != null && !rejectionReason.isBlank()) {
@@ -118,6 +121,7 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
+        log.info("Booking cancelled: id={} user={}", id, userEmail);
     }
 
     public Booking updateBooking(String id, Booking updated, String userEmail) {
