@@ -107,6 +107,21 @@ public class ResourceDataSeeder implements CommandLineRunner {
             res("605 PC Lab", "Computer Lab", "Main Building", "6th Floor", "A604",
                     ResourceType.LAB, 30, "08:00", "20:00"),
 
+            // ── F BLOCK — 15th Floor ─────────────────────────────────────────
+            res("15H A", "Lecture Hall", "F Block", "15th Floor", "F1501",
+                    ResourceType.LECTURE_HALL, 80, "08:00", "20:00"),
+            res("15H B", "Lecture Hall", "F Block", "15th Floor", "F1502",
+                    ResourceType.LECTURE_HALL, 80, "08:00", "20:00"),
+            res("15L A Lab", "Computer Lab", "F Block", "15th Floor", "F1503",
+                    ResourceType.LAB, 40, "08:00", "20:00"),
+            res("15L B Lab", "Computer Lab", "F Block", "15th Floor", "F1504",
+                    ResourceType.LAB, 40, "08:00", "20:00"),
+
+            // ── STUDENT CENTRE — Discussion Pods ─────────────────────────────
+            discussionPod("Discussion Pod A", "SC-POD-A"),
+            discussionPod("Discussion Pod B", "SC-POD-B"),
+            discussionPod("Discussion Pod C", "SC-POD-C"),
+
             // ── LIBRARY — Meeting Rooms (5 rooms, max 2h, 4-5 members) ───────
             libraryRoom("Library Meeting Room 1", "LIB-MR-01"),
             libraryRoom("Library Meeting Room 2", "LIB-MR-02"),
@@ -138,6 +153,29 @@ public class ResourceDataSeeder implements CommandLineRunner {
                 .minAttendees(0)
                 .maxAttendees(0)
                 .timeSlots(List.of("08:00-10:00", "10:00-12:00", "13:00-15:00", "15:00-17:00", "18:00-20:00"))
+                .build();
+    }
+
+    /** Student Centre open discussion pods: max 1h, 2–6 members */
+    private Resource discussionPod(String name, String roomCode) {
+        return Resource.builder()
+                .name(name)
+                .description("Open discussion pod in the Student Centre. Max 1 hour, for groups of 2–6.")
+                .building("Student Centre")
+                .floor("Ground Floor")
+                .roomCode(roomCode)
+                .location("Student Centre · Ground Floor · " + roomCode)
+                .type(ResourceType.MEETING_ROOM)
+                .capacity(6)
+                .status(ResourceStatus.ACTIVE)
+                .availableFrom("08:00")
+                .availableTo("22:00")
+                .maxBookingHours(1)
+                .minAttendees(2)
+                .maxAttendees(6)
+                .timeSlots(List.of("08:00-09:00", "09:00-10:00", "10:00-11:00", "11:00-12:00",
+                        "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00",
+                        "18:00-19:00", "19:00-20:00", "20:00-21:00", "21:00-22:00"))
                 .build();
     }
 
