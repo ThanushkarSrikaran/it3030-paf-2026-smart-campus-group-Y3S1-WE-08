@@ -92,7 +92,7 @@ public class BookingService {
         }
         Booking updated = bookingRepository.save(booking);
 
-        String message = "Your booking for resource \"" + updated.getResourceId() + "\" has been " + status.name().toLowerCase();
+        String message = "Your booking for \"" + updated.getResourceName() + "\" has been " + status.name().toLowerCase();
         if (status == BookingStatus.REJECTED && rejectionReason != null && !rejectionReason.isBlank()) {
             message += ". Reason: " + rejectionReason;
         }
