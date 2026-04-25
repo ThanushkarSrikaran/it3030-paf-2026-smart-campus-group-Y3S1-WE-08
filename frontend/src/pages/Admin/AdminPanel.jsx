@@ -217,9 +217,9 @@ const AdminPanel = () => {
                                         <Briefcase className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2 z-10" />
                                         <select name="role" value={formData.role} onChange={handleChange} disabled={isManagerOnly}
                                             className="w-full pl-11 pr-4 py-3.5 rounded-2xl font-black text-xs text-white outline-none appearance-none tracking-widest cursor-pointer"
-                                            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                                            <option value="TECHNICIAN">TECHNICIAN</option>
-                                            <option value="MANAGER">MANAGER</option>
+                                            style={{ background: '#0f1f3d', border: '1px solid rgba(255,255,255,0.15)' }}>
+                                            <option value="TECHNICIAN" style={{ background: '#0f1f3d', color: '#ffffff' }}>TECHNICIAN</option>
+                                            <option value="MANAGER" style={{ background: '#0f1f3d', color: '#ffffff' }}>MANAGER</option>
                                         </select>
                                         <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
                                             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
@@ -234,9 +234,9 @@ const AdminPanel = () => {
                                         <select name="department" value={isManagerOnly ? managerDepartment : formData.department}
                                             onChange={handleChange} required disabled={isManagerOnly}
                                             className="w-full pl-11 pr-4 py-3.5 rounded-2xl font-black text-xs text-white outline-none appearance-none tracking-widest cursor-pointer"
-                                            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                                            {!isManagerOnly && <option value="">SELECT DEPARTMENT</option>}
-                                            {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+                                            style={{ background: '#0f1f3d', border: '1px solid rgba(255,255,255,0.15)' }}>
+                                            {!isManagerOnly && <option value="" style={{ background: '#0f1f3d', color: '#94a3b8' }}>SELECT DEPARTMENT</option>}
+                                            {DEPARTMENTS.map(d => <option key={d} value={d} style={{ background: '#0f1f3d', color: '#ffffff' }}>{d}</option>)}
                                         </select>
                                         <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
                                             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>

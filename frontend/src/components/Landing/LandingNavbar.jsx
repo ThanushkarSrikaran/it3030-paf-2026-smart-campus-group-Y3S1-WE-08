@@ -92,19 +92,21 @@ const LandingNavbar = () => {
                             {isLoggedIn && <div className="flex items-center gap-1"><NotificationPanel /><div className="h-6 w-px mx-1" style={{ background: 'rgba(255,255,255,0.1)' }} /></div>}
 
                             {isLoggedIn ? (
-                                <div className="flex items-center gap-3 cursor-pointer group">
-                                    <div className="hidden md:flex flex-col text-right leading-tight">
-                                        <span className="text-sm font-black text-white group-hover:text-sky-400 transition-colors uppercase tracking-tight">{displayName}</span>
-                                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{user?.roles?.[0]?.replace('ROLE_', '') || 'MEMBER'}</span>
-                                    </div>
-                                    <div className="relative flex-shrink-0">
-                                        <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: '2px solid rgba(56,189,248,0.3)' }}>
-                                            {displayPicture
-                                                ? <img src={displayPicture} alt={displayName} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                                                : <div className="w-full h-full flex items-center justify-center font-black text-white text-base" style={{ background: 'linear-gradient(135deg,#2563eb,#7c3aed)' }}>{displayName?.[0]?.toUpperCase() || 'U'}</div>
-                                            }
+                                <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/profile')}>
+                                        <div className="hidden md:flex flex-col text-right leading-tight">
+                                            <span className="text-sm font-black text-white group-hover:text-sky-400 transition-colors uppercase tracking-tight">{displayName}</span>
+                                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{user?.roles?.[0]?.replace('ROLE_', '') || 'MEMBER'}</span>
                                         </div>
-                                        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-sky-400 border-2 rounded-full" style={{ borderColor: '#040d24' }} />
+                                        <div className="relative flex-shrink-0">
+                                            <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: '2px solid rgba(56,189,248,0.3)' }}>
+                                                {displayPicture
+                                                    ? <img src={displayPicture} alt={displayName} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                                                    : <div className="w-full h-full flex items-center justify-center font-black text-white text-base" style={{ background: 'linear-gradient(135deg,#2563eb,#7c3aed)' }}>{displayName?.[0]?.toUpperCase() || 'U'}</div>
+                                                }
+                                            </div>
+                                            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-sky-400 border-2 rounded-full" style={{ borderColor: '#040d24' }} />
+                                        </div>
                                     </div>
                                     <button onClick={handleLogout} className="hidden md:flex p-2 rounded-xl text-slate-500 hover:text-red-400 transition-colors">
                                         <LogOut className="w-4 h-4" />

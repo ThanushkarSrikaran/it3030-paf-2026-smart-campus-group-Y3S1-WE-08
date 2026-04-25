@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LayoutDashboard, BookOpen, Calendar, Ticket, LogOut, User, Shield, Edit3, X } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 const Navbar = () => {
     const { user, logout, displayName, displayPicture, updateProfile } = useAuth();
+    const navigate = useNavigate();
     const [showProfileEditor, setShowProfileEditor] = useState(false);
     const [savingProfile, setSavingProfile] = useState(false);
     const [profileForm, setProfileForm] = useState({ name: '', department: '', picture: '' });
@@ -69,7 +70,7 @@ const Navbar = () => {
 
             {/* Profile Section */}
             <div className="flex flex-col items-center pt-5 pb-6 px-6">
-                <div className="relative mb-4 group cursor-pointer" onClick={openProfileEditor}>
+                <div className="relative mb-4 group cursor-pointer" onClick={() => navigate('/profile')}>
                     <div className="w-20 h-20 rounded-full overflow-hidden shadow-2xl bg-slate-800 flex items-center justify-center text-2xl font-black text-white transition-all duration-300 group-hover:scale-105"
                         style={{ border: '2px solid rgba(56,189,248,0.25)', boxShadow: '0 0 20px rgba(56,189,248,0.1)' }}>
                         {displayPicture
@@ -85,7 +86,7 @@ const Navbar = () => {
                     style={{ background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.25)', boxShadow: '0 0 10px rgba(56,189,248,0.08)' }}>
                     {displayRole}
                 </div>
-                <button onClick={openProfileEditor}
+                <button onClick={() => navigate('/profile')}
                     className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-slate-400 hover:text-sky-300 text-[10px] font-black uppercase tracking-widest transition-all hover:scale-105"
                     style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                     <Edit3 className="w-3 h-3" /> Edit Profile

@@ -22,6 +22,7 @@ import Legal from './pages/Common/Legal';
 import UserCatalogue from './pages/User/UserCatalogue';
 import UserBookings from './pages/User/UserBookings';
 import UserSupport from './pages/User/UserSupport';
+import ProfilePage from './pages/User/ProfilePage';
 import AdminPanel from './pages/Admin/AdminPanel';
 
 const RoleBasedRoute = ({ adminComponent: AdminComp, userComponent: UserComp, adminRoles }) => {
@@ -140,6 +141,7 @@ const App = () => {
                         <Route path="/catalogue" element={<RoleBasedRoute adminComponent={ResourceList} userComponent={UserCatalogue} adminRoles={['ADMIN', 'MANAGER']} />} />
                         <Route path="/bookings" element={<RoleBasedRoute adminComponent={MyBookings} userComponent={UserBookings} adminRoles={['ADMIN', 'MANAGER']} />} />
                         <Route path="/tickets" element={<RoleBasedRoute adminComponent={TicketList} userComponent={UserSupport} adminRoles={['ADMIN', 'MANAGER', 'TECHNICIAN']} />} />
+                        <Route path="/profile" element={<RoleBasedRoute adminComponent={ProfilePage} userComponent={ProfilePage} adminRoles={['ADMIN', 'MANAGER', 'TECHNICIAN']} />} />
                         <Route path="/admin" element={
                             <RoleGuard allowedRoles={['ADMIN', 'MANAGER']}>
                                 <MainLayout><AdminPanel /></MainLayout>
