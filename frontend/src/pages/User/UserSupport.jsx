@@ -69,6 +69,15 @@ const UserSupport = () => {
         );
     });
 
+    const getPriorityMeta = (priority) => {
+        switch ((priority || '').toUpperCase()) {
+            case 'HIGH':   return { label: 'HIGH',   badge: 'bg-rose-100 text-rose-700' };
+            case 'MEDIUM': return { label: 'MEDIUM', badge: 'bg-amber-100 text-amber-700' };
+            case 'LOW':    return { label: 'LOW',    badge: 'bg-slate-100 text-slate-600' };
+            default:       return null;
+        }
+    };
+
     const getStatusIcon = (status) => {
         switch (status) {
             case 'PENDING': return <Clock className="w-6 h-6 text-amber-500" />;
@@ -169,6 +178,7 @@ const UserSupport = () => {
                                     <th className="px-6 py-4">Ticket</th>
                                     <th className="px-6 py-4">Created</th>
                                     <th className="px-6 py-4">Department</th>
+                                    <th className="px-6 py-4">Priority</th>
                                     <th className="px-6 py-4">Status</th>
                                     <th className="px-6 py-4">Progress</th>
                                     <th className="px-6 py-4">Messages</th>
@@ -202,6 +212,16 @@ const UserSupport = () => {
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4">
+                                                {(() => {
+                                                    const p = getPriorityMeta(ticket.priority);
+                                                    return p ? (
+                                                        <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-black uppercase tracking-wider ${p.badge}`}>{p.label}</span>
+                                                    ) : (
+                                                        <span className="text-slate-400 text-xs font-semibold">—</span>
+                                                    );
+                                                })()}
+                                            </td>
+                                            <td className="px-6 py-4">
                                                 <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-black uppercase tracking-wider ${meta.badge}`}>
                                                     {meta.label}
                                                 </span>
@@ -231,7 +251,7 @@ const UserSupport = () => {
                                 })}
                                 {filteredTickets.length === 0 && (
                                     <tr>
-                                        <td colSpan="7" className="px-6 py-10 text-center text-slate-400 font-semibold">
+                                        <td colSpan="8" className="px-6 py-10 text-center text-slate-400 font-semibold">
                                             No tickets match this search/filter.
                                         </td>
                                     </tr>
