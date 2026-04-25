@@ -14,3 +14,14 @@ frontend/dist/
 .idea/
 *.iml
 .vscode/
+
+# Claude Code internal files
+.claude/
+
+# Environment variables (never commit secrets)
+frontend/.env
+frontend/.env.local
+frontend/.env*.local
+
+# Temp / scratch files
+frontend/temp.txt
